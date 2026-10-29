@@ -28,6 +28,8 @@
       --c-green-light: #EAFAF1;
       --c-indigo: #1A3FBF;
       --c-indigo-light: #EBF0FF;
+      --c-purple: #7C3AED;
+      --c-purple-light: #F5F3FF;
     }
 
     * {
@@ -149,8 +151,8 @@
 
     .level-cards-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
     }
 
     .level-card-btn {
@@ -279,18 +281,33 @@
       background: var(--c-green);
     }
 
-    /* Level 4 specific active */
+    /* Level 4 specific active - Become My Agent */
     .level-card-btn[data-level="4"] .btn-num {
-      color: var(--c-indigo);
+      color: var(--c-purple);
     }
 
     .level-card-btn[data-level="4"].active {
+      background: var(--c-purple);
+      border-color: var(--c-purple);
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+    }
+
+    .level-card-btn[data-level="4"].active .dot-active {
+      background: var(--c-purple);
+    }
+
+    /* Level 5 specific active - AI Engineering */
+    .level-card-btn[data-level="5"] .btn-num {
+      color: var(--c-indigo);
+    }
+
+    .level-card-btn[data-level="5"].active {
       background: var(--c-indigo);
       border-color: var(--c-indigo);
       box-shadow: 0 6px 20px rgba(26, 63, 191, 0.35);
     }
 
-    .level-card-btn[data-level="4"].active .dot-active {
+    .level-card-btn[data-level="5"].active .dot-active {
       background: var(--c-indigo);
     }
 
@@ -1079,7 +1096,7 @@
     /* Responsive */
     @media (max-width: 1024px) {
       .level-cards-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
       }
 
       .hero-inner {
@@ -1193,8 +1210,17 @@
         <button type="button" class="level-card-btn" data-level="4" role="tab" aria-selected="false" id="tab-4"
           aria-controls="panel-4">
           <span class="btn-num">04</span>
-          <span class="btn-title">AI Engineering</span>
+          <span class="btn-title">Become My Agent</span>
           <div class="btn-robot-icon" id="robot-icon-4"></div>
+          <span class="dot-active"></span>
+        </button>
+
+        <!-- Card 05 -->
+        <button type="button" class="level-card-btn" data-level="5" role="tab" aria-selected="false" id="tab-5"
+          aria-controls="panel-5">
+          <span class="btn-num">05</span>
+          <span class="btn-title">AI Engineering</span>
+          <div class="btn-robot-icon" id="robot-icon-5"></div>
           <span class="dot-active"></span>
         </button>
 
@@ -1734,6 +1760,109 @@ John Tan (Class A)`
       {
         id: 4,
         number: "04",
+        title: "Become My Agent",
+        character: "Maker",
+        role: "Agent Builder",
+        task: "Build any specialist AI Agent you want using Microsoft 365 Copilot's built-in Agent Builder.",
+        deliverable: "Your Custom AI Agent (Microsoft 365 Copilot)",
+        description: "Design, configure and publish your own AI agent — define its purpose, add skills and knowledge, then share it with your team or students.",
+        color: "#7C3AED",
+        colorLight: "#F5F3FF",
+        robot: "buddy",
+        isReady: true,
+        tool: {
+          name: "Microsoft 365 Copilot",
+          url: "https://copilot.microsoft.com",
+          badge: "Agent Builder",
+          desc: "Open <strong>Microsoft 365 Copilot</strong> and click <strong>Agents</strong> in the left sidebar to access the built-in Agent Builder — no separate tool required."
+        },
+        files: [
+          {
+            name: "SKILL.md",
+            ext: "MD",
+            color: "#7C3AED",
+            desc: "PowerPoint Slide Builder skill definition — add this skill to let your agent create presentations for students"
+          }
+        ],
+        steps: [
+          {
+            num: "1",
+            title: "Open Agents & Click New Agent",
+            image: "1.png",
+            imageAlt: "Microsoft 365 Copilot sidebar showing Agents menu and New agent button",
+            desc: "In <strong>Microsoft 365 Copilot</strong>, click <strong>Agents</strong> in the left sidebar (circled in red). A panel opens listing available agents. Scroll to the bottom of the list and click <strong>New agent</strong> (also circled in red)."
+          },
+          {
+            num: "2",
+            title: "Skip the Guided Builder",
+            image: "2.png",
+            imageAlt: "Build your own specialist agent screen with Skip button highlighted",
+            desc: "On the <em>Build your own specialist agent</em> intro screen, click <strong>Skip &rarr;</strong> (circled in red) to jump straight to the manual editor — this gives you full control over the agent's Instructions, Skills, Knowledge and Suggested Prompts."
+          },
+          {
+            num: "3",
+            title: "Name the Agent & Paste Instructions",
+            image: "3.png",
+            imageAlt: "Agent Instructions field in the Microsoft 365 Copilot agent editor",
+            desc: "Set the agent name to <strong>Data Science Programming Study Coach</strong> and the description to <strong>Data Science Programming Module</strong>. Then click the <strong>Instructions</strong> field and paste the full instructions below.",
+            promptLabel: "Instructions to paste:",
+            prompt: `Purpose
+You are a study coach for the Data Science Programming module at ITE College West. You help students learn to write Python for data work: loading and cleaning data, exploring it with pandas and NumPy, visualising it, and building and evaluating simple machine learning models with scikit-learn. Your knowledge comes mainly from the uploaded module resources (notes, slides, worksheets, datasets). Always use them first.
+
+What you do
+Explain concepts in plain language, then show a short, runnable Python example. Help students understand error messages and debug their own code by guiding them to the cause. Give practice questions, quizzes and mini-exercises on request, with feedback. Summarise topics for revision and point to the relevant module resource or week. Suggest next steps when a student is stuck, such as the specific function, chart or metric to try.
+
+Tone
+Friendly, patient and encouraging. Students may be beginners. Use simple English and short sentences. Define jargon the first time you use it. Be concise: lead with the answer, then explain. Use numbered steps for procedures and code blocks for all code. Praise effort, and correct mistakes kindly and specifically.
+
+How to teach
+Check what the student already tried or understands before explaining. For debugging and assignment-style questions, give hints and guiding questions first. Reveal a full solution only after the student has attempted it, or if it is clearly a practice or worked example. Keep examples small, use sample data, and comment the code. End longer answers with one short check question or a suggested next step.
+
+Rules and guidelines
+Base answers on the uploaded resources. If something is not covered, say so, then give general guidance clearly marked as outside the module materials. Never invent functions, library features, datasets or facts. If unsure, say you are unsure and suggest checking the official documentation. Academic integrity: do not write complete solutions for graded assignments, tests or projects. Explain the concepts, give hints, review the student's own code, and encourage them to explain their work in their own words. Privacy: tell students not to paste personal, confidential or real customer data. Remind them of PDPA if they do. Stay on topic: Python for data science, statistics basics and machine learning at module level. Politely decline unrelated requests and redirect to the module. Use Python 3 and the libraries taught in the module (pandas, NumPy, matplotlib, seaborn, scikit-learn). Use Jupyter or Colab-style code where possible. For assessment details, deadlines, grades or policy questions, direct students to their lecturer or the official module guide rather than guessing. If a student seems distressed or overwhelmed, respond kindly and suggest they speak to their lecturer or the college's student support services.
+
+Files
+Slides: Data_Science_Programming_Slides.pptx. It has speaker notes on every slide and one native, editable sample chart.
+Notes: Data_Science_Programming_Notes.docx. It has ten sections with code snippets, a cleaning table and five revision questions. Student-facing, so you can upload it as an agent knowledge source.`
+          },
+          {
+            num: "4",
+            title: "Add the PowerPoint Skill",
+            image: "4.png",
+            imageAlt: "Skills section showing powerpoint-slide-builder skill added with + Add button",
+            desc: "In the <strong>Skills</strong> section, click <strong>+ Add</strong>. Download the <code>SKILL.md</code> file (button below) and follow the on-screen steps to add the <strong>powerpoint-slide-builder</strong> skill — this lets your agent generate PowerPoint presentations for students on request."
+          },
+          {
+            num: "5",
+            title: "Add Knowledge Sources",
+            image: "5.png",
+            imageAlt: "Knowledge section showing Add knowledge button and drop zone",
+            desc: "In the <strong>Knowledge</strong> section, click <strong>+ Add knowledge</strong> (or drag and drop files directly into the panel). Upload your two module resource files:<br><strong>1.</strong> <code>Data_Science_Programming_Slides.pptx</code> &mdash; module slides with speaker notes<br><strong>2.</strong> <code>Data_Science_Programming_Notes.docx</code> &mdash; notes with code snippets and revision questions<br>Wait for each file to show a <strong>Ready</strong> status before saving."
+          },
+          {
+            num: "6",
+            title: "Add Suggested Prompts",
+            image: "6.png",
+            imageAlt: "Suggested prompts table with Title and Message columns",
+            desc: "In the <strong>Suggested prompts</strong> section, add the four prompts below. Each has a short <strong>Title</strong> (button label) and a full <strong>Message</strong> (sent to the agent when the student clicks it). Copy the prompts below, one at a time.",
+            promptLabel: "Suggested prompts (Title | Message):",
+            prompt: `Title: Quiz me on pandas
+Message: Give me 5 multiple-choice questions on data cleaning in pandas, one at a time. Wait for my answer before moving on, and explain each answer.
+
+Title: Practice exercise
+Message: Give me a beginner exercise on groupby in pandas. Give hints first, not the solution.
+
+Title: Quiz me on Python basics
+Message: Ask me 5 short questions on lists, dictionaries and loops, and tell me what I got right and wrong.
+
+Title: Summarise a topic
+Message: Summarise the key points of exploratory data analysis for revision.`
+          }
+        ]
+      },
+      {
+        id: 5,
+        number: "05",
         title: "AI Engineering",
         character: "Engineer",
         role: "App & Dashboard Builder",
@@ -2084,12 +2213,21 @@ Add a navigation menu to switch between Browse, Report a Fault and Dashboard.`
                   </div>
                 `;
             }
+            let imageHtml = '';
+            if (s.image) {
+              imageHtml = `
+                <div style="margin-top:12px; border-radius:10px; overflow:hidden; border:1.5px solid #e2e8f0; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                  <img src="${s.image}" alt="${escapeHtml(s.imageAlt || s.title)}" style="width:100%; height:auto; display:block; cursor:zoom-in;" onclick="window.open(this.src,'_blank')" title="Click to view full image">
+                </div>
+              `;
+            }
             return `
               <div class="step-item">
                 <div class="step-badge" style="background:${level.color};">${s.num}</div>
                 <div class="step-body">
                   <h4>${s.title}</h4>
                   <p>${s.desc}</p>
+                  ${imageHtml}
                   ${promptBoxHtml}
                 </div>
               </div>
@@ -2170,11 +2308,13 @@ Add a navigation menu to switch between Browse, Report a Fault and Dashboard.`
       const promptArea = document.getElementById('promptArea');
       const copyBtn = document.getElementById('copyPromptBtn');
 
-      if (level.id === 3 || level.id === 4) {
-        // Level 3 & Level 4: Self-contained steps with embedded prompts, full-width 1-column layout
+      if (level.id === 3 || level.id === 4 || level.id === 5) {
+        // Level 3, 4 & 5: Self-contained steps with embedded prompts, full-width 1-column layout
         if (actionBlockTitle) {
           if (level.id === 3) {
             actionBlockTitle.textContent = (activeData.partNum === 1) ? "Sample Student Test Email" : "Activity Guide & Workflow Canvas";
+          } else if (level.id === 4) {
+            actionBlockTitle.textContent = "Agent Build Steps";
           } else {
             actionBlockTitle.textContent = "Activity Guide & Implementation Steps";
           }

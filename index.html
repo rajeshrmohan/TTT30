@@ -2558,6 +2558,48 @@ ${activePart.liveTestEmail.body}`;
     // Initialize on Level 1
     setLevel(1);
 
+    // Shortcut "a" on Level 04 — show AI-ExL agent dialog
+    (function () {
+      const dialog = document.createElement('div');
+      dialog.id = 'aiexl-dialog-overlay';
+      dialog.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center;';
+      dialog.innerHTML = `
+        <div style="background:#fff;border-radius:16px;padding:32px 28px 24px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2);text-align:center;font-family:inherit;">
+          <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.08em;color:#7C3AED;text-transform:uppercase;margin-bottom:8px;">AI Agent</div>
+          <div style="font-size:1.5rem;font-weight:700;color:#111827;margin-bottom:20px;">AI-ExL</div>
+          <a href="https://m365.cloud.microsoft/chat/?titleId=T_d578451d-6507-b3ef-303b-c9a989c79183" target="_blank" rel="noopener"
+            style="display:inline-block;background:#7C3AED;color:#fff;font-weight:600;font-size:0.9rem;padding:10px 24px;border-radius:8px;text-decoration:none;margin-bottom:12px;">
+            Open Agent
+          </a><br>
+          <button id="aiexl-dialog-close"
+            style="background:none;border:1px solid #e5e7eb;color:#6b7280;font-size:0.85rem;padding:8px 20px;border-radius:8px;cursor:pointer;margin-top:4px;">
+            Close
+          </button>
+        </div>`;
+      document.body.appendChild(dialog);
+
+      function openDialog() {
+        dialog.style.display = 'flex';
+      }
+      function closeDialog() {
+        dialog.style.display = 'none';
+      }
+
+      dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) closeDialog();
+      });
+      dialog.querySelector('#aiexl-dialog-close').addEventListener('click', closeDialog);
+
+      document.addEventListener('keydown', function (e) {
+        if (dialog.style.display === 'flex' && e.key === 'Escape') { closeDialog(); return; }
+        const active = document.querySelector('.level-card-btn[data-level="4"]');
+        if (!active || active.getAttribute('aria-selected') !== 'true') return;
+        const tag = (e.target || e.srcElement).tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+        if (e.key === 'a' || e.key === 'A') openDialog();
+      });
+    })();
+
     // Force blob download for file-download-btn (fixes server MIME-type blocking)
     document.addEventListener('click', function (e) {
       const btn = e.target.closest('.file-download-btn');

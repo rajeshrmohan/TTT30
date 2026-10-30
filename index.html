@@ -2557,6 +2557,27 @@ ${activePart.liveTestEmail.body}`;
 
     // Initialize on Level 1
     setLevel(1);
+
+    // Force blob download for file-download-btn (fixes server MIME-type blocking)
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.file-download-btn');
+      if (!btn) return;
+      const href = btn.getAttribute('href');
+      if (!href) return;
+      e.preventDefault();
+      fetch(href)
+        .then(r => r.blob())
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = href.split('/').pop();
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        });
+    });
   </script>
 </body>
 
